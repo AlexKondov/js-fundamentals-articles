@@ -1,0 +1,407 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Coercion · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../this-keyword/" />
+    
+    
+    <link rel="prev" href="../closures/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../scope/">
+            
+                <a href="../scope/">
+            
+                    
+                    Scope
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../closures/">
+            
+                <a href="../closures/">
+            
+                    
+                    Closures
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Coercion
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../this-keyword/">
+            
+                <a href="../this-keyword/">
+            
+                    
+                    This Keyword
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../new-keyword/">
+            
+                <a href="../new-keyword/">
+            
+                    
+                    New Keyword
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../value-vs-reference/">
+            
+                <a href="../value-vs-reference/">
+            
+                    
+                    Value vs Reference
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../promises/">
+            
+                <a href="../promises/">
+            
+                    
+                    Promises
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../prototype-and-inheritance/">
+            
+                <a href="../prototype-and-inheritance/">
+            
+                    
+                    Prototype and Inheritance
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../event-loop/">
+            
+                <a href="../event-loop/">
+            
+                    
+                    Event Loop
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Coercion</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="coercion">Coercion</h1>
+<p>Coercion is the term that is used for unexpected type casting in JavaScript. Often when you are working with data you will need to transform it from one data type to another&#x200A;&#x2014;&#x200A;something that every developer does on a daily basis. Coercion refers to those not-obvious type casts that happen as a side-effect of different operations.</p>
+<p>Most people see this as something that is here to make their lives harder. Some see it as a flaw in the design of the language and try to avoid it. However, I suggest we take a deeper dive, understand how it works and embrace the JS chaos. Unless you want to write your own JavaScript engine, chances are you will have to work with coercion. Even if you decide to avoid it as much as possible, it&#x2019;s essential to know what to work around and how.</p>
+<p>Of course, if not handled properly coercion can be destructive and lead to unwanted bugs and complications in your codebase. But for the time being, let&#x2019;s focus on another point of view&#x200A;&#x2014;&#x200A;that coercion is necessary in order to simplify our code and get rid of unnecessary boilerplate that would make our code messier.</p>
+<h2 id="strings-and-numbers">Strings and Numbers</h2>
+<p>Let&#x2019;s start easy&#x200A;&#x2014;&#x200A;how can we combine numbers and strings? How do we make a string out of a number and vice versa? The simplest and often used way to cast a number to a string is by using the + operator.</p>
+<pre><code class="lang-javascript"><span class="hljs-number">14</span> + <span class="hljs-string">&quot;&quot;</span> <span class="hljs-comment">// &quot;14&quot;</span>
+</code></pre>
+<p>Whenever you are using &#x201C;+&#x201D; or &#x201C;-&#x201D; the values that you are adding or subtracting must be of the same type. Now in the above example they obviously are not. So what will happen is that JS will try to even them out&#x200A;&#x2014;&#x200A;in this case cast our number to a string and then add them together. In other words every &#x201C;+&#x201D; expression that involves a string will result in a string.</p>
+<pre><code class="lang-javascript"><span class="hljs-number">42</span> + <span class="hljs-string">&quot;0&quot;</span> <span class="hljs-comment">// &quot;420&quot;</span>
+</code></pre>
+<p>We can concat strings using &#x201C;+&#x201D;, but what will happen if we use &#x201C;-&#x201D;? It can be used only on numbers, so once again, JS will cast the values to be of the same type&#x200A;&#x2014;&#x200A;this time numbers.</p>
+<pre><code class="lang-javascript"><span class="hljs-string">&quot;42&quot;</span> - <span class="hljs-number">7</span> <span class="hljs-comment">// 35</span>
+<span class="hljs-string">&quot;42&quot;</span> - <span class="hljs-number">0</span> <span class="hljs-comment">// 42</span>
+<span class="hljs-string">&quot;42&quot;</span> - <span class="hljs-string">&quot;9&quot;</span> <span class="hljs-comment">// 33</span>
+</code></pre>
+<p>Okay that&#x2019;s not that hard, but there is always a catch. Let&#x2019;s try adding two arrays together and see what happens:</p>
+<pre><code class="lang-javascript">[<span class="hljs-string">&quot;alex&quot;</span>, <span class="hljs-string">&quot;sam&quot;</span>] + [<span class="hljs-string">&quot;jon&quot;</span>, <span class="hljs-string">&quot;mary&quot;</span>] <span class="hljs-comment">// &quot;alex,samjon,mary&quot;</span>
+</code></pre>
+<p>Wait, what just happened? Now, whenever you use the &#x201C;+&#x201D; operator, the values will concatenate if one is already a string or they will be cast to strings if possible. Therefore, you get the two arrays&#x2019; string representation which are then added together. It&#x2019;s logical once you understand it, but it can lead to disappointments when it happens unexpectedly.</p>
+<p>Another interesting case is what happens when we use the &#x201C;-&#x201D; operator. As I mentioned earlier, it is reserved only for numeric types, so once again, the useful JavaScript language will cast the values to numbers (if possible) and then execute that operation on the resulting values.</p>
+<pre><code class="lang-javascript">[<span class="hljs-number">3</span>] - [<span class="hljs-number">1</span>] <span class="hljs-comment">// 2</span>
+[<span class="hljs-string">&quot;alex&quot;</span>, <span class="hljs-string">&quot;sam&quot;</span>] - [<span class="hljs-string">&quot;jon&quot;</span>, <span class="hljs-string">&quot;mary&quot;</span>] <span class="hljs-comment">// NaN</span>
+</code></pre>
+<p>JavaScript just tries to save you some time whenever it can. Some developers expect it to behave like other languages and that leaves them unhappy with the results. The more you get used to the JS specifics the less bugs you will introduce in your code.</p>
+<h2 id="booleans">Booleans</h2>
+<p>This has undoubtedly caused trouble even for more experienced developers. Boolean coercion is often used in if statements, loop checks, ternary and logical operators. Whenever you&#x2019;re using one of those, if the variable in it is not a boolean it will be coerced to one. More importantly, the result of a logical expression, for example is not necessarily a boolean but the value of one of the two operands that are used. Maybe an example would be better:</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> a = <span class="hljs-number">100</span>
+<span class="hljs-keyword">const</span> b = <span class="hljs-string">&quot;test&quot;</span>
+<span class="hljs-keyword">const</span> c = <span class="hljs-literal">null</span>
+a || b <span class="hljs-comment">// 100</span>
+a &amp;&amp; b <span class="hljs-comment">// &quot;test&quot;</span>
+a || c <span class="hljs-comment">// 100</span>
+a &amp;&amp; c <span class="hljs-comment">// null</span>
+b || c <span class="hljs-comment">// &quot;test&quot;</span>
+b &amp;&amp; c <span class="hljs-comment">// null</span>
+</code></pre>
+<p>Let&#x2019;s break down what&#x2019;s going on here. Developers coming from other languages might expect this to return true or false when they use it in conditional checks, for example. In fact what you get is the value of one of the operands.</p>
+<p>When you use the || operator, if the first value casts to true you will get that value returned. Otherwise, you will always get the second one. In the case of &amp;&amp; you will always get the second value if they are both coerced to true. If the first one casts to false then you will get it&#x2019;s value returned.</p>
+<p>Right now you&#x2019;re probably thinking about the flaws of the JavaScript language and considering your career choices, but let me just remind you that this is the exact same behavior you get in Python and Ruby (surprise). Their inheritance implementation also behaves in a similar matter to prototypical inheritance but this is a different topic.</p>
+<p>So, why is this useful? Something that can often be seen is initializing variables like this:</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">greet</span> (<span class="hljs-params">name</span>) </span>{
+    name = name || <span class="hljs-string">&apos;visitor&apos;</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Hello, <span class="hljs-subst">${name}</span>!`</span>)
+}
+greet() <span class="hljs-comment">// Hello, visitor!</span>
+</code></pre>
+<p>Here we&#x2019;re using this exact behavior to check if a value is missing and assign another one if it is. You can see this in many codebases. As a side note, in ES6 you can define default values directly in the function arguments in order to avoid checking all the passed values in the beginning of the function.</p>
+<h2 id="equality">Equality</h2>
+<p>When talking about coercion we must also mention the equality operators and common misconceptions about them. The popular explanation is that == compares values without checking types and === compares both values and types. While this is a simple way to explain what&#x2019;s going on it&#x2019;s not entirely true.</p>
+<p>As we mentioned earlier, some operations cannot be run on values of different types, so behind the curtains JavaScript will use coercion to make our lives easier. Whenever we compare two values using ==, JavaScript will use coercion to cast the values to be of the same type. On the other hand when we use strict equality === JS won&#x2019;t type cast the values (meaning that if they are of different types they&#x2019;re not equal).</p>
+<p>Simply put, == is comparison which allows coercion, === is comparison without coercion.</p>
+<pre><code class="lang-javascript"><span class="hljs-number">42</span> == <span class="hljs-string">&quot;42&quot;</span> <span class="hljs-comment">// true</span>
+<span class="hljs-number">42</span> === <span class="hljs-string">&quot;42&quot;</span> <span class="hljs-comment">// false</span>
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>In conclusion, coercion is something that you will encounter on a daily basis as a JS developer, so understanding it is crucial. The information in this article is enough to get a general understanding but there is a lot more to learn about the nature of the helpful language that is JavaScript.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../closures/" class="navigation navigation-prev " aria-label="Previous page: Closures">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../this-keyword/" class="navigation navigation-next " aria-label="Next page: This Keyword">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Coercion","level":"1.4","depth":1,"next":{"title":"This Keyword","level":"1.5","depth":1,"path":"this-keyword/README.md","ref":"this-keyword/README.md","articles":[]},"previous":{"title":"Closures","level":"1.3","depth":1,"path":"closures/README.md","ref":"closures/README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"coercion/README.md","mtime":"2018-07-02T11:29:13.854Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-02T11:45:46.434Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

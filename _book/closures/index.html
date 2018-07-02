@@ -1,0 +1,458 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Closures · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../coercion/" />
+    
+    
+    <link rel="prev" href="../scope/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../scope/">
+            
+                <a href="../scope/">
+            
+                    
+                    Scope
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Closures
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../coercion/">
+            
+                <a href="../coercion/">
+            
+                    
+                    Coercion
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../this-keyword/">
+            
+                <a href="../this-keyword/">
+            
+                    
+                    This Keyword
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../new-keyword/">
+            
+                <a href="../new-keyword/">
+            
+                    
+                    New Keyword
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../value-vs-reference/">
+            
+                <a href="../value-vs-reference/">
+            
+                    
+                    Value vs Reference
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../promises/">
+            
+                <a href="../promises/">
+            
+                    
+                    Promises
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../prototype-and-inheritance/">
+            
+                <a href="../prototype-and-inheritance/">
+            
+                    
+                    Prototype and Inheritance
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../event-loop/">
+            
+                <a href="../event-loop/">
+            
+                    
+                    Event Loop
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Closures</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="closure">Closure</h1>
+<p>You&#x2019;ve undoubtedly been using closures for quite a while now for they have a variety of applications. Every time you&#x2019;ve added a callback for an event handler you&#x2019;ve used the magical properties of the closure.</p>
+<p>I&#x2019;ve come across different one sentence explanations for them but the one that clicked the most for me was given by Kyle Simpson:</p>
+<blockquote>
+<p>Closure is when a function is able to remember and access its lexical scope even when that function is executing outside its lexical scope.</p>
+</blockquote>
+<p>This explanation can be a bit overwhelming at first so we will break it down piece by piece and see that closures are no dark magic after all.</p>
+<p>We won&#x2019;t be going into detail about scope in this article (there will be a separate one on this topic) but it&#x2019;s essential to know what it is in order to understand how the closure works. Scope is practically the part of the code in which certain variables and functions are contained. In JavaScript every function creates a new scope and it&#x2019;s variables and passed arguments will be available only inside of it.</p>
+<p>If you declare a variable inside a function it won&#x2019;t be available outside of it. But we can also define functions inside of other functions which will have a scope on their own inside of them. Now the special thing about those nested functions is that they can access their parent&#x2019;s variables.</p>
+<p>It&#x2019;s not that special to be honest, since every function defined in the global scope can access the variables in it, but I&#x2019;m getting to something here. Those nested functions that we mentioned can access their parent function&#x2019;s scope but they themselves can&#x2019;t be called from outside of the parent function. Unless we expose them somehow.</p>
+<p>We can expose that inner function so it can be used in the global scope. Great! Now we can call it and use it as we wish. But let&#x2019;s imagine that this exposed inner function actually references one of the variables in it&#x2019;s parent&#x2019;s scope. Will that be a problem? No, of course it won&#x2019;t because it&#x2019;s a Closure!</p>
+<h2 id="closures-are-exposed-nested-functions">Closures are exposed nested functions</h2>
+<p>I am not sure if this is the best definition that can be given for closures, but it captures the essence of the term well enough. Closures are exposed functions which can access the scope of their parent even if we call them from the outside. Do you get that explanation with the lexical scope that we mentioned earlier now?</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">person</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    greet: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;hello from &apos;</span> + name)
+    }
+  }
+}
+
+<span class="hljs-keyword">let</span> alex = person(<span class="hljs-string">&apos;alex&apos;</span>);
+alex.greet(); <span class="hljs-comment">// hello from alex</span>
+<span class="hljs-built_in">console</span>.log(alex.name); <span class="hljs-comment">// undefined</span>
+<span class="hljs-built_in">console</span>.log(name); <span class="hljs-comment">// will throw ReferenceError</span>
+</code></pre>
+<p>Here we define a person function that takes a single parameter name. It returns an object which has a greet function as one of it&#x2019;s properties. As we now know, this exposed greet function will still have access to its parent&#x2019;s arguments even when we call it like this. So even that the name variable is not explicitly defined in it&#x2019;s scope greet will fetch it from its parent&#x2019;s because it is a closure.</p>
+<p>Not too difficult to understand and you have probably taken advantage of this behaviour numerous times. Before I started reading about closures I never thought of all the dark magic that is going on behind the curtain so I can achieve encapsulation and use modules.</p>
+<p>Whoa, whoa&#x2026; Modules? Encapsulation? Those came out of the blue.</p>
+<h2 id="modules-and-encapsulation-with-closures">Modules and encapsulation with Closures</h2>
+<p>One of the first things that I learned when I started diving deeper into the JavaScript maelstrom is that there are a lot of complex sounding words that have a really practical explanation to them. Modules and encapsulation are the perfect examples of such terms. We&#x2019;ll use the same strategy and break down each one to understand it thoroughly by starting with encapsulation.</p>
+<p>Encapsulation is one of the basic principles of programming. Those who have studied OOP are familiar with the concept but for those who are not&#x200A;&#x2014;&#x200A;this is essentially a hiding mechanism which allows us to keep some of our data private. Often we don&#x2019;t want to expose all the contents of a function to the global scope, we want most of it to remain private and untouchable.</p>
+<p>This is where closures are really handy. We can utilise their power to access the parent scope even when they are called outside of it to achieve proper encapsulation. We can have many functions and variables inside our parent function and by using a closure we can expose to the world only the functionality that we desire.</p>
+<p>With closures we can define a public API for our function and keep everything else private.
+Now that we have encapsulation covered, we just need to put it in practice. The implementation of this concept in JavaScript is done using the module pattern.</p>
+<h2 id="modules">Modules</h2>
+<p>In ES6 we have better file-based modules which we can use with the import and export keywords, but it&#x2019;s important to note that they are just syntactic sugar over what we are about to see.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params">firstName, lastName, age</span>) </span>{
+  <span class="hljs-keyword">var</span> private = <span class="hljs-string">&apos;this is a private member&apos;</span>;
+
+  <span class="hljs-keyword">return</span> {
+    getName: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;My name is &apos;</span> + firstName + <span class="hljs-string">&apos; &apos;</span> + lastName);
+    },
+    getAge: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;I am &apos;</span> + age + <span class="hljs-string">&apos; years old&apos;</span>)
+    }
+  }
+}
+
+<span class="hljs-keyword">let</span> person = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&apos;Alex&apos;</span>, <span class="hljs-string">&apos;Kondov&apos;</span>, <span class="hljs-number">22</span>);
+person.getName();
+person.getAge();
+<span class="hljs-built_in">console</span>.log(person.private); <span class="hljs-comment">//undefined</span>
+</code></pre>
+<p>This is a fairly simple example to demonstrate how we can keep some of the function&#x2019;s data private. We can have other nested functions and even use them in the exported ones but not expose them.</p>
+<pre><code class="lang-javascript">
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Order</span> (<span class="hljs-params">items</span>) </span>{
+  <span class="hljs-keyword">const</span> total = items =&gt; {
+    <span class="hljs-keyword">return</span> items.reduce((acc, curr) =&gt; {
+      <span class="hljs-keyword">return</span> acc + curr.price
+    }, <span class="hljs-number">0</span>)
+  }
+
+  <span class="hljs-keyword">const</span> addTaxToPrice = price =&gt; price + (price * <span class="hljs-number">0.2</span>)
+
+  <span class="hljs-keyword">return</span> {
+    calculateTotal: () =&gt; {
+      <span class="hljs-keyword">return</span> addTaxToPrice(total(items)).toFixed(<span class="hljs-number">2</span>)
+    }
+  }
+}
+
+<span class="hljs-keyword">const</span> items = [
+  { name: <span class="hljs-string">&apos;Toy&apos;</span>, price: <span class="hljs-number">14.99</span> },
+  { name: <span class="hljs-string">&apos;Candy&apos;</span>, price: <span class="hljs-number">7.99</span> }
+]
+
+<span class="hljs-keyword">const</span> order = Order(items)
+<span class="hljs-built_in">console</span>.log(order.total) <span class="hljs-comment">// undefined</span>
+<span class="hljs-built_in">console</span>.log(order.addTaxToPrice) <span class="hljs-comment">// undefined</span>
+<span class="hljs-built_in">console</span>.log(order.calculateTotal()) <span class="hljs-comment">// 27.58</span>
+</code></pre>
+<p>In this slightly more realistic example we have a function which returns an order object. The only exposed function is calculateTotal. It has a closure over the Order function which allows it to use its variables and passed arguments. It also hides what is actually happening when you are calculating the order total, allowing you to add a shipping cost or something else in the future.</p>
+<p>Weird parts
+Now, JavaScript has it&#x2019;s weird parts. In fact some of them are so weird that they can be the cause of serious headache and restless nights of debugging. Closures are no different when we don&#x2019;t use them properly.</p>
+<p>The following code is often given at JavaScript interviews with the task to guess it&#x2019;s output.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++) {
+  setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timer</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(i);
+  }, i * <span class="hljs-number">1000</span>);
+}
+</code></pre>
+<p>All we&#x2019;re doing here is looping from 1 do 5 and setting a timeout to print the current number after a certain amount of time. Common sense says that this code will output 1, 2, 3, 4, 5, right?</p>
+<p>To our surprise the above code logs the number 6 five consecutive times in the console. If you do this loop without the setTimeout you won&#x2019;t be having any issues, because the log will be executed immediately. But apparently queueing up this operation in time is what causes the flaw.</p>
+<p>We expect that every setTimeout call will receive it&#x2019;s own copy of the i variable, but what happens is that it accesses it from it&#x2019;s parent&#x2019;s scope. And because they are queued the first log will happen 1 second after it was queued. When those 1000 milliseconds pass the loop has long finished and the i variable rests with the value of 6 assigned to it.</p>
+<p>We understand the problem but how do we fix it? setTimeout will look for the i variable in the global scope, which leads to it not printing the number we want. We can manipulate that by wrapping the setTimeout in a function and passing the variable that we want to log in it. This way the setTimeout function will access it from it&#x2019;s parent&#x2019;s scope instead of the global one.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">5</span>; i++) {
+  (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">index</span>) </span>{
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timer</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-built_in">console</span>.log(index);
+    }, index * <span class="hljs-number">1000</span>);
+  })(i)
+}
+</code></pre>
+<p>We are using an IIFE (Immediately Invoked Function Expression) and pass the number to log to it. An IIFE is a function that we call immediately after defining it and are often used in situations such as this&#x200A;&#x2014;&#x200A;when we want to create a scope. This way each function will be called with it&#x2019;s own copy of the variable, meaning that when the setTimeout runs it will access the proper number. So using the example above we will get the result of 1, 2, 3, 4 and 5 that we are looking for.</p>
+<p>Closing thoughts
+This article captures the essence of closures but there is more to it to learn and more edge cases to ponder upon. If you want to dabble further into the depths of closure dark magic I strongly suggest Kyle Simpson&#x2019;s book on Scope &amp; Closures.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../scope/" class="navigation navigation-prev " aria-label="Previous page: Scope">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../coercion/" class="navigation navigation-next " aria-label="Next page: Coercion">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Closures","level":"1.3","depth":1,"next":{"title":"Coercion","level":"1.4","depth":1,"path":"coercion/README.md","ref":"coercion/README.md","articles":[]},"previous":{"title":"Scope","level":"1.2","depth":1,"path":"scope/README.md","ref":"scope/README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"closures/README.md","mtime":"2018-07-01T15:00:22.323Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-02T11:45:46.434Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

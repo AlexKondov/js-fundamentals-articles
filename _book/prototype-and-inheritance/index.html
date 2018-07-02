@@ -1,0 +1,461 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Prototype and Inheritance · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../event-loop/" />
+    
+    
+    <link rel="prev" href="../promises/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../scope/">
+            
+                <a href="../scope/">
+            
+                    
+                    Scope
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../closures/">
+            
+                <a href="../closures/">
+            
+                    
+                    Closures
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../coercion/">
+            
+                <a href="../coercion/">
+            
+                    
+                    Coercion
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../this-keyword/">
+            
+                <a href="../this-keyword/">
+            
+                    
+                    This Keyword
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../new-keyword/">
+            
+                <a href="../new-keyword/">
+            
+                    
+                    New Keyword
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../value-vs-reference/">
+            
+                <a href="../value-vs-reference/">
+            
+                    
+                    Value vs Reference
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../promises/">
+            
+                <a href="../promises/">
+            
+                    
+                    Promises
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Prototype and Inheritance
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../event-loop/">
+            
+                <a href="../event-loop/">
+            
+                    
+                    Event Loop
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Prototype and Inheritance</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="prototype-and-inheritance">Prototype and Inheritance</h1>
+<p>Inheritance in JavaScript is something that has been discussed for a long time. I started learning JS by taking a bootcamp-y course that was aimed to give us the practical knowledge we&#x2019;d need in our daily coding challenges. We were told how the bad JavaScript language lacks OO patterns and how we have to break our backs to make them work. The instructors quickly went through prototype and how we can mimic class behavior with it without going in depth with how it&#x2019;s working (because they didn&#x2019;t understand it either).</p>
+<p>So I was left with this feeling that JS is a crippled language because it lacks the abilities of the other languages to create classes out of the box so we had to do all kinds of crazy shenanigans to make it fit into what we believe was right. Then I started thinking, if it&#x2019;s so hard to learn, leads to illogical behavior and there are so many roadblocks, maybe prototypes are not the right approach. After reading Kyle Simpson&#x2019;s book about prototype I made the conclusion that a lot of people blame JavaScript for their own inability to learn new concepts. JS has it&#x2019;s specifics and I&#x2019;ll go through how prototypical inheritance works and what are it&#x2019;s problems.</p>
+<h2 id="prototype">Prototype</h2>
+<p>Almost all objects in JavaScript have the prototype property. By using it and more specifically the prototype chain we can mimic inheritance. The prototype is a reference to another object and it is used whenever JS can&#x2019;t find the property you&#x2019;re looking for on the current object. Simply put, whenever you call a property on an object and it doesn&#x2019;t exist, JavaScript will go to the prototype object and look for it there. If it finds it it will use it, if not it will go to that object&#x2019;s property and look there. This can bubble up all the way to Object.prototype before returning undefined. This is the essence of the prototype chain and the behavior that sits behind JavaScript&#x2019;s inheritance.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Animal</span>(<span class="hljs-params">name</span>) </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+}
+
+Animal.prototype.sleep = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">&apos;: Zzz...&apos;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Dog</span>(<span class="hljs-params">name</span>) </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+}
+
+<span class="hljs-comment">// Create a reference for the prototype</span>
+Dog.prototype = <span class="hljs-built_in">Object</span>.create(<span class="hljs-keyword">new</span> Animal());
+
+Dog.prototype.makeSound = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">&apos;: Woof woof!&apos;</span>);
+}
+
+<span class="hljs-keyword">var</span> dog = <span class="hljs-keyword">new</span> Dog(<span class="hljs-string">&apos;Lassie&apos;</span>);
+dog.makeSound(); <span class="hljs-comment">// Lassie: Woof woof!</span>
+dog.sleep(); <span class="hljs-comment">// Lassie: Zzz...</span>
+dog.missing(); <span class="hljs-comment">// Throws Error</span>
+</code></pre>
+<p>The above code can be overwhelming when you first encounter prototypes, let&#x2019;s break it down. We&#x2019;ll start from line 20&#x200A;&#x2014;&#x200A;with the new keyword we create a new object using the Dog constructor function on line 9. That gives us an object with a name property and a makeSound function bound to it&#x2019;s prototype. When we call makeSound it is executed in the context of the current object (dog) and we get the correct output.</p>
+<p>When we call sleep() it obviously doesn&#x2019;t exist on Dog, so it goes up the prototype chain to Animal. It finds it there and calls it. On the last line we call the missing() function which is not defined anywhere. It will go all the way up the prototype chain to Object.prototype and since it won&#x2019;t find it there it will throw an error.</p>
+<p>As you see we haven&#x2019;t used the word class anywhere, we haven&#x2019;t defined a class that extends the base one or something like that. This is more of a delegation than inheritance. Every object has this prototype property which points to another object which should be delegated responsibility in case the property we&#x2019;re looking for is not found on the current one. There&#x2019;s nothing fancy about that, the object is just delegating responsibilities to it&#x2019;s superior whenever it can&#x2019;t handle the task.</p>
+<h2 id="shadowing">Shadowing</h2>
+<p>If we look through the prism of inheritance once again we know that we often need to override properties and methods. In prototypical inheritance this is called shadowing.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Animal</span>(<span class="hljs-params">name</span>) </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+}
+
+Animal.prototype.sleep = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">&apos;: Zzz...&apos;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Dog</span>(<span class="hljs-params">name</span>) </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+}
+
+<span class="hljs-comment">// Create a reference for the prototype</span>
+Dog.prototype = <span class="hljs-built_in">Object</span>.create(<span class="hljs-keyword">new</span> Animal());
+
+Dog.prototype.makeSound = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">&apos;: Woof woof!&apos;</span>);
+}
+
+Dog.prototype.sleep = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.name + <span class="hljs-string">&apos;: Overriding Zzzz....&apos;</span>);
+}
+
+<span class="hljs-keyword">var</span> dog = <span class="hljs-keyword">new</span> Dog(<span class="hljs-string">&apos;Lassie&apos;</span>);
+dog.makeSound(); <span class="hljs-comment">// Lassie: Woof woof!</span>
+dog.sleep(); <span class="hljs-comment">// Lassie: Overriding Zzzz....</span>
+</code></pre>
+<p>What we&#x2019;re doing here is creating a property with the same name on Dog&#x2019;s prototype, so when we call it it will find it there and stop the prototype chain bubbling. As you can see, we&#x2019;re not using the override keyword anywhere, we&#x2019;re just declaring the property on the Dog object so JavaScript won&#x2019;t start looking for it in the prototype chain.</p>
+<h2 id="problems-with-inheritance">Problems with Inheritance</h2>
+<p>If you&#x2019;ve read my previous articles with the same label, here is the point in which I tell you that JavaScript always has it&#x2019;s specifics and not understanding them correctly can give you a big headache. At some point you may have to use shadowing on a property, but then inside of it call the &#x201C;parent&#x201D; function with the same name. While in most other languages you can just use super(), here things are a bit trickier. If you use this approach and call this.sleep() inside of the shadowed function, you will end up calling the same function and the result will be a recursion. Therefore we must think of another way to solve the problem.</p>
+<pre><code class="lang-javascript">Dog.prototype.sleep = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{       
+  Animal.prototype.sleep();
+}
+</code></pre>
+<p>This sounds like a good approach at first and it almost is, but if you execute it you will see that you will not get the result you expect because the contextual binding is not correct.</p>
+<pre><code class="lang-javascript">Dog.prototype.sleep = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  Animal.prototype.sleep.call(<span class="hljs-keyword">this</span>);
+}
+</code></pre>
+<p>By executing it like this however we call the function on Animal using the contextual binding of the current function. In other words we call Animal&#x2019;s sleep function using the current Dog&#x2019;s data, I can&#x2019;t explain it much simpler than that.</p>
+<h2 id="the-concept-of-inheritance">The concept of Inheritance</h2>
+<p>For me, one of the hardest things to wrap my head around was the prototype keyword meaning. I was trying to make some mental connection between the word and the process of inheritance until I realized that they really have no connection. What we&#x2019;re doing is just abusing the prototype behavior delegation in order to mimic inheritance while in fact we don&#x2019;t have it. In order to give you another example of how our conception of class based hierarchies is different than JS prototypes&#x200A;&#x2014;&#x200A;I present you the constructor property.</p>
+<p>This is a property on Object.prototype and it returns the constructor function that created the object that we&#x2019;re calling this on. Not the name of the function but the function itself. What do you think would happen if we log into the console the constructor property of the dog variable? You probably expect it to return the Dog function, but you will be surprised.</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">console</span>.log(dog.constructor); <span class="hljs-comment">// [Function: Animal]</span>
+</code></pre>
+<p>Wait what? This is returning the Animal function because it is attached to the Dog property upon object creation. This once again shows that those methods and properties weren&#x2019;t implemented with OO design in mind.</p>
+<h2 id="es6-classes">ES6 Classes</h2>
+<p>As of ES6 you can say that the inheritance hierarchy problems in JavaScript is solved. We got the class keyword together with all other goodies that come with it. We can now define classes, extend them, use constructors and the super keyword to access parent methods without the ugliness of the code above.</p>
+<pre><code class="lang-javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-keyword">this</span>.name = name;
+  }
+
+  sleep () {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${this.name}</span>: Zzz...`</span>);
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dog</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-keyword">super</span>(name);
+  }
+
+  bark () {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${this.name}</span>: Woof woof!`</span>);
+  }
+}
+
+dog = <span class="hljs-keyword">new</span> Dog(<span class="hljs-string">&apos;Lassie&apos;</span>);
+dog.bark(); <span class="hljs-comment">// Lassie: Woof woof!</span>
+dog.sleep(); <span class="hljs-comment">// Lassie: Zzz...</span>
+</code></pre>
+<p>This looks a lot better if you&#x2019;re already familiar with classes. It removed the unnecessary repetition of the prototype keyword, the use of Object.create() and the dark magic that we had to do in order to call a &#x201C;parent&#x201D; function. You also have the proper syntax and it&#x2019;s much easier to understand what is going on. The ES6 code and the prototype code above are more or less doing the exact same thing, but the one of the new standard is times easier to understand.</p>
+<p>Now something that you need to bear in mind is that this syntax is (mostly) just a beautified version of the prototype. It really simplifies the development process by making things easier for people with background in other languages to understand. But something that needs to be considered is that because of that same reason&#x200A;&#x2014;&#x200A;ES6 classes being syntactic sugar over prototype&#x200A;&#x2014;&#x200A;there are still some issues.</p>
+<p>Because the prototype approach is more like delegation rather than real inheritance, &#x201C;parent&#x201D; objects are passed as a reference. In other languages, upon creating an object, you get a copy of it&#x2019;s functionality, including the parent classes. Therefore in JS, a child object can access &#x201C;parent&#x201D; functions even if they are created after the child object. This is due to the fact that prototype is just a reference, not a concrete object. It&#x2019;s a hotline that objects use to find a way out when they are missing a particular property.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Until the introduction of &#x201C;real&#x201D; classes in ES6, the whole concept of inheritance was messed up and (usually) taught in a wrong manner. Prototypes are more of a delegation tool and they don&#x2019;t really behave like classes. Now with the modern approach we can pretty much create normal class hierarchies and use understandable syntax for them, but be wary of possible problems that may occur. This syntax is only a beautiful facade for what&#x2019;s going on inside.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../promises/" class="navigation navigation-prev " aria-label="Previous page: Promises">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../event-loop/" class="navigation navigation-next " aria-label="Next page: Event Loop">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Prototype and Inheritance","level":"1.9","depth":1,"next":{"title":"Event Loop","level":"1.10","depth":1,"path":"event-loop/README.md","ref":"event-loop/README.md","articles":[]},"previous":{"title":"Promises","level":"1.8","depth":1,"path":"promises/README.md","ref":"promises/README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"prototype-and-inheritance/README.md","mtime":"2018-07-02T11:43:44.842Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-02T11:45:46.434Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

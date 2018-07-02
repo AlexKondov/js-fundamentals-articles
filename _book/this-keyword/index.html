@@ -1,0 +1,418 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>This Keyword · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../new-keyword/" />
+    
+    
+    <link rel="prev" href="../coercion/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../scope/">
+            
+                <a href="../scope/">
+            
+                    
+                    Scope
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../closures/">
+            
+                <a href="../closures/">
+            
+                    
+                    Closures
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../coercion/">
+            
+                <a href="../coercion/">
+            
+                    
+                    Coercion
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    This Keyword
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../new-keyword/">
+            
+                <a href="../new-keyword/">
+            
+                    
+                    New Keyword
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../value-vs-reference/">
+            
+                <a href="../value-vs-reference/">
+            
+                    
+                    Value vs Reference
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../promises/">
+            
+                <a href="../promises/">
+            
+                    
+                    Promises
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../prototype-and-inheritance/">
+            
+                <a href="../prototype-and-inheritance/">
+            
+                    
+                    Prototype and Inheritance
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../event-loop/">
+            
+                <a href="../event-loop/">
+            
+                    
+                    Event Loop
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >This Keyword</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="the-this-keyword">The &quot;this&quot; Keyword</h1>
+<p>Another topic that has been the reason for a lot of discussion is the this keyword. More specifically&#x200A;&#x2014;&#x200A;it&#x2019;s unexpected behavior at times. About an year ago, a colleague of mine asked me to have a look at her JS code because she was having strange bugs. As a Java developer just starting to play around with JavaScript she had done the mistake of thinking she could understand the language before actually studying it&#x200A;&#x2014;&#x200A;like many people do.</p>
+<p>How many other developers going into JS have problems with this, I do not know but I expect the number to be quite high. In fact this is probably the easiest concept of JavaScript that you have to understand. If I have to explain it with my own words I would probably spit out something in the lines of:</p>
+<p>The this keyword does not refer to the function in which it is used or it&#x2019;s scope. It refers to the object on which a function is being executed and depends entirely on the call-site of the function.
+Let&#x2019;s create a really basic example to illustrate what is going on:</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testThisKeyword</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>) <span class="hljs-comment">// [object Window]</span>
+}
+testThisKeyword()
+</code></pre>
+<p>Let me give you another one which will question your understanding on JavaScript even more:</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testThisKeyword</span>(<span class="hljs-params"></span>) </span>{ 
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.name) <span class="hljs-comment">// Alex</span>
+}
+<span class="hljs-keyword">var</span> name = <span class="hljs-string">&apos;Alex&apos;</span>
+testThisKeyword()
+</code></pre>
+<p>What? How on earth does that input the name variable? It&#x2019;s not even created in the function&#x2019;s scope! This is one of the reasons that developers get really sad. It just doesn&#x2019;t work the way you expect it to. Contrary to popular belief there is no black magic going on underneath. What is happening here is that the name variable is declared in the global object, therefore it can be accessed as a property on it. If we look at the call-site of the function we will see that we are not implicitly calling it on an object so this will reference the global object.</p>
+<p>The this keyword gets automatically defined in the scope of every function and it&#x2019;s binding happens in three ways&#x200A;&#x2014;&#x200A;default, implicit and explicit. The example with the standalone function invocation has already shown you how the default binding works. Something to have in mind is that that is the fallback binding if another is not specified. Let&#x2019;s get into more details about the implicit and explicit binding.</p>
+<h2 id="implicit-binding">Implicit Binding</h2>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> person = {
+  name: <span class="hljs-string">&apos;Alex&apos;</span>,
+  greet() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;Hey my name is &apos;</span> + <span class="hljs-keyword">this</span>.name)
+  }
+}
+person.greet() <span class="hljs-comment">// Hey my name is Alex</span>
+</code></pre>
+<p>In order to understand what value this will hold you need to look at where it is called. Not the function in which it is used but the call-site. In this example the owner or containing object is the person object. A trick that I like to use is to look at the left side of the function call. The object that is standing before the dot is what the this keyword will be bound to.</p>
+<p>Something to have in mind is that this binding can get &#x201C;lost&#x201D; if you start passing functions as reference. Even if you are referencing a function that is a property on an object, if you call it separately it won&#x2019;t have the binding you expect and it will use the default binding. This is why the only thing that matters for this is the call-site of the function. A better and more in-depth example of this can be read in Kyle Simpson&#x2019;s book on this and object prototypes, so I won&#x2019;t go into details here.</p>
+<h2 id="explicit-binding">Explicit Binding</h2>
+<p>In the example of implicit binding we have to use an owner object in order to achieve the binding that we want. But what if we don&#x2019;t want to have a reference to the function on the object or we are unable to mutate it? There is a solution to explicitly say to a function what object it should use for this&#x200A;&#x2014;&#x200A;using functions such as call, apply and bind. Using explicit binding is so common that those two functions are available from the function prototype, however there are differences between them.</p>
+<p>The call function allows you to pass in the object to which the this keyword should be bound to. It also allows you to pass arguments for the function as additional parameters.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">greet</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log( <span class="hljs-keyword">this</span>.name );
+}
+
+<span class="hljs-keyword">var</span> person = {
+    name: <span class="hljs-string">&apos;Alex&apos;</span>
+};
+
+greet.call( person, arg1, arg2, arg3, ... ); <span class="hljs-comment">// Alex</span>
+</code></pre>
+<p>The apply function is similar to call with the difference that the function arguments are passed as an array or an array-like object.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">greet</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log( <span class="hljs-keyword">this</span>.name );
+}
+
+<span class="hljs-keyword">var</span> person = {
+    name: <span class="hljs-string">&apos;Alex&apos;</span>
+};
+
+greet.apply( person, [args]); <span class="hljs-comment">// Alex</span>
+</code></pre>
+<p>The bind function is a little bit different than the first two. It creates a new function that will call the original one with this bound to whatever was passed in.</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">greet</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log( <span class="hljs-keyword">this</span>.name );
+}
+
+<span class="hljs-keyword">var</span> person = {
+    name: <span class="hljs-string">&apos;Alex&apos;</span>
+};
+
+<span class="hljs-keyword">var</span> greetPerson = greet.bind( person );
+greetPerson(); <span class="hljs-comment">// Alex</span>
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>A little bit earlier in the article I told you that those were the main bindings for the this keyword. Well I may have lied to you, because there is also a binding that is happening when you use the new keyword. However, I&#x2019;m planning on writing a small article on that so I&#x2019;ll skip the explanation for now.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../coercion/" class="navigation navigation-prev " aria-label="Previous page: Coercion">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../new-keyword/" class="navigation navigation-next " aria-label="Next page: New Keyword">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"This Keyword","level":"1.5","depth":1,"next":{"title":"New Keyword","level":"1.6","depth":1,"path":"new-keyword/README.md","ref":"new-keyword/README.md","articles":[]},"previous":{"title":"Coercion","level":"1.4","depth":1,"path":"coercion/README.md","ref":"coercion/README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"this-keyword/README.md","mtime":"2018-07-02T11:34:19.553Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-02T11:45:46.434Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
