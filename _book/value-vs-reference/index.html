@@ -146,7 +146,7 @@
                 <a href="../this-keyword/">
             
                     
-                    This Keyword
+                    The "this" Keyword
             
                 </a>
             
@@ -159,7 +159,7 @@
                 <a href="../new-keyword/">
             
                     
-                    New Keyword
+                    The "new" Keyword
             
                 </a>
             
@@ -265,6 +265,91 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="value-vs-reference">Value vs Reference</h1>
+<p>A big step to becoming a good developer in general is understanding how variables can sometimes contain a value and in others - a reference. This will save you a lot of debugging time and help you write better code.</p>
+<h2 id="data-types">Data Types</h2>
+<p>The data types in JavaScript fall into two broader categories. Strings, numbers, booleans, null and undefined fall in the primitives category. The remaining - arrays, objects and functions fall into the second category which we will call objects.</p>
+<p>We will not go into the details of each single data type. Instead we will take a more general look at primitives and objects and understand how each group stores its values.</p>
+<h2 id="primitives">Primitives</h2>
+<p>Primitives are fairly easy to understand. Each time you create a variable it will have its own copy of the value that is passed in.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> num = <span class="hljs-number">42</span>;
+<span class="hljs-keyword">const</span> str = <span class="hljs-string">&quot;Hello!&quot;</span>;
+</code></pre>
+<p>Each variable contains its own copy of the given value. In other words we can say that each variable points to a specific place in memory which contains its value.</p>
+<p>So if we try to assign it to another variable:</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> a = <span class="hljs-number">7</span>;
+<span class="hljs-keyword">let</span> b = a;
+b++;
+
+<span class="hljs-built_in">console</span>.log(a, b); <span class="hljs-comment">// 7, 8</span>
+</code></pre>
+<p>When we create the variable <code>b</code> it gets its own copy of the value contained in <code>a</code>. So when we increment <code>b</code>, the value of <code>a</code> will stay the same. Even though they contain the same value (the number 7), the value that they store it saved in different places in memory. So modifying one of them does not modify the other.</p>
+<p>Let&apos;s take a look at how comparison works.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> a = <span class="hljs-number">7</span>;
+<span class="hljs-keyword">const</span> b = a;
+
+a === b; <span class="hljs-comment">// true</span>
+
+<span class="hljs-keyword">const</span> c = <span class="hljs-number">7</span>;
+<span class="hljs-keyword">const</span> d = <span class="hljs-number">7</span>;
+
+c === d; <span class="hljs-comment">// true</span>
+</code></pre>
+<p>When we compare variables containing primitives, we compare their values. We find what they are storing, we retrieve it from memory and compare that.</p>
+<h2 id="objects">Objects</h2>
+<p>A common cause of headache for beginners is the expectation that objects should behave the same way primitives do. When I started I couldn&apos;t understand why two objects with identical structure would not be equal to each other in particular cases. And I couldn&apos;t understand why they would be in others.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> obj1 = { a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span> };
+<span class="hljs-keyword">const</span> obj2 = { a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span> };
+</code></pre>
+<p>Those two objects are completely identical, so judging by what we know from primitives we would expect them to be equal to each other. But to our surprise, comparing them does not return the result we expect.</p>
+<pre><code class="lang-javascript">obj1 === obj2; <span class="hljs-comment">// false</span>
+</code></pre>
+<p>Whenever we are creating an object (array, object or function) we will store its value in a particular place in memory and each object will have its contents stored in a different place.</p>
+<p>But we already know that primitives behavve in a similar manner. So the problem does not come from how we store objects but how we compare them. When we try to compare two objects we are not comparing their contents but the place in memory that they are pointing to.</p>
+<p>This si why two objects with identical structure are not equal to each other - they reference different places in memory.</p>
+<p>This is where it gets tricky. Since objects contain a reference to a place in memory we must be really careful of how we use them.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> obj1 = { a: <span class="hljs-number">1</span> };
+<span class="hljs-keyword">const</span> obj2 = obj1;
+
+obj1 === obj2; <span class="hljs-comment">// true</span>
+</code></pre>
+<p>Now the comparison returns true because both variables point to the same place in memory. When we assign <code>obj2</code> to be equal to <code>obj1</code> we are not giving it a separate copy of the object but a reference to the same one. They are sharing the same one. So changing one will also affect the other.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> obj1 = { a: <span class="hljs-number">1</span> };
+<span class="hljs-keyword">let</span> obj2 = obj1;
+
+obj2.b = <span class="hljs-number">10</span>;
+
+obj1; <span class="hljs-comment">// { a: 1, b: 10 }</span>
+obj2; <span class="hljs-comment">// { a: 1, b: 10 }</span>
+</code></pre>
+<p>While primitives are fairly easy to understand, the improper understanding of objects and references will lead to errors.
+A fairly simple example is mutating a value that is passed to a function</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> obj = { a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span> }
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mutate</span>(<span class="hljs-params">someObject</span>) </span>{
+  someObject.c = <span class="hljs-number">3</span>
+  <span class="hljs-comment">// Do something with the object</span>
+}
+
+obj <span class="hljs-comment">// { a: 1, b: 2 }</span>
+mutate()
+obj <span class="hljs-comment">// { a: 1, b: 2, c: 3 }</span>
+</code></pre>
+<p>This is the reason you want to be extra careful when you are mutating an object, especially one you don&apos;t control.
+However, you may still want to make a copy of some object and extend it or change its values. Using the new object spread operator
+you can do something like this.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> obj1 = { a: <span class="hljs-number">1</span> }
+<span class="hljs-keyword">const</span> obj2 = { ...obj1 }
+
+obj1 === obj2 <span class="hljs-comment">// false</span>
+</code></pre>
+<p>By using the spread operator we create a new object containing the values of <code>obj1</code>.
+When we compare them we see that they have different references, so we can safely work with the second one.
+This technique is often used to create a new object and add or change a property.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> obj1 = { a: <span class="hljs-number">1</span> }
+<span class="hljs-keyword">const</span> obj2 = { ...obj1, b: <span class="hljs-number">10</span> }
+<span class="hljs-keyword">const</span> obj3 = { ...obj1, a: <span class="hljs-number">2</span> }
+</code></pre>
+<p>In this example, <code>obj2</code> will have an extra property on it, while <code>obj3</code> will modify the existing property <code>a</code> without modifying the original object <code>obj1</code>.</p>
 
                                 
                                 </section>
@@ -292,7 +377,7 @@
 
             
                 
-                <a href="../new-keyword/" class="navigation navigation-prev " aria-label="Previous page: New Keyword">
+                <a href="../new-keyword/" class="navigation navigation-prev " aria-label="Previous page: The "new" Keyword">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
@@ -308,7 +393,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Value vs Reference","level":"1.7","depth":1,"next":{"title":"Promises","level":"1.8","depth":1,"path":"promises/README.md","ref":"promises/README.md","articles":[]},"previous":{"title":"New Keyword","level":"1.6","depth":1,"path":"new-keyword/README.md","ref":"new-keyword/README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"value-vs-reference/README.md","mtime":"2018-07-02T13:35:38.874Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-02T11:45:46.434Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Value vs Reference","level":"1.7","depth":1,"next":{"title":"Promises","level":"1.8","depth":1,"path":"promises/README.md","ref":"promises/README.md","articles":[]},"previous":{"title":"The \"new\" Keyword","level":"1.6","depth":1,"path":"new-keyword/README.md","ref":"new-keyword/README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"value-vs-reference/README.md","mtime":"2018-07-08T12:48:47.255Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-08T12:48:54.480Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -146,7 +146,7 @@
                 <a href="../this-keyword/">
             
                     
-                    This Keyword
+                    The "this" Keyword
             
                 </a>
             
@@ -159,7 +159,7 @@
                 <a href="../new-keyword/">
             
                     
-                    New Keyword
+                    The "new" Keyword
             
                 </a>
             
@@ -265,6 +265,77 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="promises">Promises</h1>
+<p>Promises are a  relatively new feature to JavaScript and can be a bit hard to grasp at first. Essentialy, a Promise represents a future action. Something that will happen in the future but you are not yet sure what will be the outcome of it. It may happen or it may fail, but you do not yet know that. Therefore we can say that a Promise has three possible states:</p>
+<ul>
+<li>pending</li>
+<li>succeeded</li>
+<li>failed</li>
+</ul>
+<p>When we construct a promise we need to provide it with a function that takes two parameters - <code>ressolve</code> and <code>reject</code>. Of course, they can be called any way we want but this is the accepted naming convention. Those two values are functions which we can call from our Promise to signal if it succeeds or fails.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> mood = <span class="hljs-string">&apos;happy&apos;</span>
+
+<span class="hljs-keyword">const</span> goingOut = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+  <span class="hljs-keyword">if</span> (mood === <span class="hljs-string">&apos;happy&apos;</span>) {
+    resolve()
+  } <span class="hljs-keyword">else</span> {
+    reject()
+  }
+})
+</code></pre>
+<p>The way we consume a promise is to specify what will happen after it succeeds or fails.</p>
+<pre><code class="lang-javascript">goingOut
+  .then(() =&gt; <span class="hljs-comment">/* The promise resolved successfuly, we take some action */</span>)
+  .catch(() =&gt; <span class="hljs-comment">/* The promise got rejected, so we can handle the error */</span>)
+</code></pre>
+<p>Promises can also pass values when they resolve or are being rejected.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> goingOut = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+  <span class="hljs-keyword">if</span> (mood === <span class="hljs-string">&apos;happy&apos;</span>) {
+    resolve(<span class="hljs-string">&apos;We are going out.&apos;</span>)
+  } <span class="hljs-keyword">else</span> {
+    reject(<span class="hljs-string">&apos;We are staying home...&apos;</span>)
+  }
+})
+
+goingOut
+  .then(msg =&gt; <span class="hljs-built_in">console</span>.log(msg)) <span class="hljs-comment">// We are going out.</span>
+  .catch(err =&gt; <span class="hljs-built_in">console</span>.log(err)) <span class="hljs-comment">// We are staying home...</span>
+</code></pre>
+<p>Promises provide a clean API when you need to chain a few operations together. We can call a function inside <code>then</code> and if the returned value is a promise we can chain it to another <code>then</code>.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> pickDestination = (msg) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+    <span class="hljs-comment">// Do something here...</span>
+    resolve(<span class="hljs-string">`<span class="hljs-subst">${msg}</span> We are going to a restaurant.`</span>)
+  })
+}
+
+goingOut
+  .then(pickDestination)
+  .then(msg =&gt; <span class="hljs-built_in">console</span>.log(msg)) <span class="hljs-comment">// We are going out. We are going to a restaurant.</span>
+</code></pre>
+<p>If we want to return a resolved or rejected promise we can use the <code>.resolve</code> and <code>.reject</code> functions on the <code>Promise</code> object directly. The <code>pickDestination</code> function will then look like this.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> pickDestination = (msg) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(<span class="hljs-string">`<span class="hljs-subst">${msg}</span> We are going to a restaurant.`</span>)
+}
+</code></pre>
+<p>Promises are used mostly for asynchronous operations. Tasks such as a request to a service that you are not sure exactly when are going to be completed or if they will succeed.</p>
+<h2 id="es7---asyncawait">ES7 - async/await</h2>
+<p>In ES7 we can use the async/await syntax for asynchronous operations. The benefits of the new keywords is that our asynchronous code will look more synchronous and we can handle errors using simplle try/catch blocks.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">willGoOut</span> = (<span class="hljs-params"></span>) =&gt; </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> goingOut = <span class="hljs-keyword">await</span> goingOut()
+    <span class="hljs-keyword">const</span> message = <span class="hljs-keyword">await</span> pickDestination(goingOut)
+  } <span class="hljs-keyword">catch</span> (err) {
+    <span class="hljs-built_in">console</span>.log(err) <span class="hljs-comment">// We will be staying home.</span>
+  }
+}
+</code></pre>
+<p>Each function in which you want to take advantage of <code>await</code> must be specified as <code>async</code>. Another thing to be aware of is that each <code>await</code> will pause the execution of your program. Chaining a few awaits one after another can lead to slow execution.</p>
+<p>In cases in which you need multiple requests resolved, which are not depending on each other, you can use <code>Promise.all</code></p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> [ value1, value2 ] = <span class="hljs-keyword">await</span> <span class="hljs-built_in">Promise</span>.all([
+  firstRequest(),
+  secondRequest()
+])
+</code></pre>
 
                                 
                                 </section>
@@ -308,7 +379,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Promises","level":"1.8","depth":1,"next":{"title":"Prototype and Inheritance","level":"1.9","depth":1,"path":"prototype-and-inheritance/README.md","ref":"prototype-and-inheritance/README.md","articles":[]},"previous":{"title":"Value vs Reference","level":"1.7","depth":1,"path":"value-vs-reference/README.md","ref":"value-vs-reference/README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"promises/README.md","mtime":"2018-07-02T13:35:06.028Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-02T11:45:46.434Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Promises","level":"1.8","depth":1,"next":{"title":"Prototype and Inheritance","level":"1.9","depth":1,"path":"prototype-and-inheritance/README.md","ref":"prototype-and-inheritance/README.md","articles":[]},"previous":{"title":"Value vs Reference","level":"1.7","depth":1,"path":"value-vs-reference/README.md","ref":"value-vs-reference/README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"promises/README.md","mtime":"2018-07-08T12:48:39.471Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-08T12:48:54.480Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

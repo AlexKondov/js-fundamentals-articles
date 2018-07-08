@@ -146,7 +146,7 @@
                 <a href="../this-keyword/">
             
                     
-                    This Keyword
+                    The "this" Keyword
             
                 </a>
             
@@ -159,7 +159,7 @@
                 <a href="../new-keyword/">
             
                     
-                    New Keyword
+                    The "new" Keyword
             
                 </a>
             
@@ -265,30 +265,37 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="scope">Scope</h1>
-<p>Like everything else in JavaScript, scope isn&#x2019;t anything special. Even though most developers don&#x2019;t spend much time reading about it, having a deeper understanding of it will help you write cleaner applications, reduce errors and implement better design patterns.</p>
 <blockquote>
 <p>Scope is the visibility of functions and variables in the different parts of your code during runtime.</p>
 </blockquote>
-<p>Most developers take scope understanding for granted, but to no surprise, JavaScript has it&#x2019;s specifics. Variables are either global scoped or function scoped. That means that they either exist globally and can be accessed everywhere or in the boundaries of the function in which they were declared.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> global = <span class="hljs-string">&apos;I am global scoped&apos;</span>
+<p>In other words, the scope of a variable or a function is the part of the code in which it is available. Working with variables and scope comes intuitively to most developers. We have some mental models that help us understand when something can be off limits.</p>
+<p>To master the JavaScript language we must be looking to build on top of those existing mental models and go into the specifics. While I&apos;m sure that every developer would do fine writing code without a deep understanding of scope, only those who have put in the time to read the small print will be able to avoid all pitfalls and answer the trickiest interview questions.</p>
+<h2 id="types-of-scope">Types of Scope</h2>
+<p>In JavaScript there are three types of scope:</p>
+<ul>
+<li><strong>Global Scope</strong> - variables can be accessed everywhere.</li>
+<li><strong>Functon Scope</strong> - variables can be accessed in the boundaries of the function in which they are defined.</li>
+<li><strong>Block Scope</strong> - variables can be accessed in the block in which they are defined. A block is separated by <code>{</code> and <code>}</code>.</li>
+</ul>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> global = <span class="hljs-string">&apos;I am global scoped&apos;</span>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testingFunctionScope</span>(<span class="hljs-params"></span>) </span>{
-    <span class="hljs-keyword">var</span> global = <span class="hljs-string">&apos;I am function scoped&apos;</span>;
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">const</span> global = <span class="hljs-string">&apos;I am function scoped&apos;</span>;
     <span class="hljs-built_in">console</span>.log(global); <span class="hljs-comment">// I am function scoped</span>
 }
 
-testingFunctionScope(); 
+fn(); 
 <span class="hljs-built_in">console</span>.log(global); <span class="hljs-comment">// I am global scoped</span>
 </code></pre>
-<p>As you can see in the example, even though the global variable is assigned a different value inside the function, it is only retained in the boundaries of the same function. Outside, the variable has a different value&#x200A;&#x2014;&#x200A;the one declared in the global scope.</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> global = <span class="hljs-string">&apos;global&apos;</span>
-<span class="hljs-keyword">var</span> anotherGlobal = <span class="hljs-string">&apos;also global&apos;</span>
+<p>As you can see in the example, even though the <code>global</code> variable is assigned a different value inside the function, it is only retained in the boundaries of the same function. Outside of it, the variable has a different value&#x200A; &#x2014; &#x200A;the one declared in the global scope. We also won&apos;t get an error for using the same variable name.</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> global = <span class="hljs-string">&apos;global&apos;</span>
+<span class="hljs-keyword">const</span> anotherGlobal = <span class="hljs-string">&apos;also global&apos;</span>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">functionScope</span> (<span class="hljs-params"></span>) </span>{
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span> (<span class="hljs-params"></span>) </span>{
 
-    <span class="hljs-keyword">var</span> global = <span class="hljs-string">&apos;function scope&apos;</span>
+    <span class="hljs-keyword">const</span> global = <span class="hljs-string">&apos;function scoped&apos;</span>
     <span class="hljs-built_in">console</span>.log(global) <span class="hljs-comment">// function scope</span>
-    <span class="hljs-keyword">var</span> scoped = <span class="hljs-string">&apos;also function scope&apos;</span>
+    <span class="hljs-keyword">const</span> scoped = <span class="hljs-string">&apos;also function scoped&apos;</span>
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inner</span> (<span class="hljs-params"></span>) </span>{
         <span class="hljs-built_in">console</span>.log(scoped); <span class="hljs-comment">// also function scope</span>
@@ -303,44 +310,65 @@ testingFunctionScope();
 <span class="hljs-built_in">console</span>.log(anotherGlobal) <span class="hljs-comment">// also global</span>
 <span class="hljs-built_in">console</span>.log(scoped) <span class="hljs-comment">// ReferenceError</span>
 
-functionScope();
+fn();
 inner(); <span class="hljs-comment">// ReferenceError</span>
 </code></pre>
-<p>Here&#x2019;s another example with a nested function and how it can access variables declared in it&#x2019;s parent scope. Just like it&#x2019;s parent function functionScope(), every variable declared in it is only available inside it and it&#x2019;s nested functions.</p>
-<p>Something to note here: NEVER use undeclared variables. By doing that, the engine will bubble up to the parent scope looking for the variable. If it doesn&#x2019;t find it, being the useful language that JS is, it will declare it for you. That way you may unintentionally create global variables and clutter the global scope.</p>
-<p>Also, don&#x2019;t think of undefined and undeclared as the same thing. Undefined means that a given declared variable does not have a defined value, while undeclared means that a variable has not yet been declared at all.</p>
-<p>Okay, up until now there isn&#x2019;t anything too special going on, but what would this code return:</p>
-<pre><code class="lang-javascript">test(); <span class="hljs-comment">// ???</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;working?!&apos;</span>);
-}
-</code></pre>
-<p>Well to the surprise of some, this will actually print &#x201C;working?!&#x201D;. In order to understand why this is working we must go into another JavaScript concept.</p>
+<p>Here we can see that the <code>inner()</code> function will have access to the variables declared in its parent function - <code>fn()</code>. Whenever we need a variable inside a function, the engine will first look for it in the scope of the current function. Then it will go one level up in the function containing it. If it doesn&apos;t find it there it will continue to go up until it reaches the global scope. If the variable is not found there we will get a <code>ReferenceError</code>.</p>
+<h2 id="undeclared-variables">Undeclared variables</h2>
+<p>JavaScript won&apos;t stop you from using undeclared variables. This means that at any point you can assign a value to a variable without using <code>const</code>, <code>let</code> or <code>var</code>. When you do this the engine will try to look for the variable bubbling up to the global scope. If it doesn&apos;t find it there it will create a global variable for you. </p>
+<p>As a rule of thumb, avoid poluting the global scope. If a variable is meant to be globally used then declare it in the global scope so your intentions can be clear. Otherwise keep it inside the scope it is used in.</p>
 <h2 id="hoisting">Hoisting</h2>
-<p>Here I am going to do something most people won&#x2019;t. I will describe what hoisting is and then explain how this is not true. Confused? Good&#x200A;&#x2014;&#x200A;JavaScript should be confusing. By hoisting, we mean this exact strange behavior in which you can call a function before it was defined.</p>
-<p>In JavaScript, BEFORE the code is executed variables and functions are moved to the top. So the strange piece of code above, actually becomes:</p>
-<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;working?!&apos;</span>);
+<p>The hoisting of functions and variables in JavaScript is the reason why we can use some of them before they are actually declared.</p>
+<pre><code class="lang-javascript">test(); <span class="hljs-comment">// ???</span>
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;working&apos;</span>);
 }
-test(); <span class="hljs-comment">// working?!</span>
 </code></pre>
-<p>Therefore, what we write is not exactly what is being executed. The same happens with variable definitions&#x200A;&#x2014;&#x200A;they are all moved to the top of their scope (if they are declared with the &#x2018;var&#x2019; keyword; &#x2018;let&#x2019; variables are not being hoisted). What&#x2019;s different about variables is that only their definition is moved to the top. The value assignment stays where it is, but the definition of the variable is hoisted. Therefore if we try to use a variable before a value is assigned to it we will get undefined, not an error.</p>
+<p>The code above will log the string <code>&quot;working&quot;</code> even though the function is called before it&apos;s declared.</p>
+<p>The common explanation that is given for this behaviour is that function and variable declarations are pulled to the top of <strong>their scope</strong>. So when you try to access them they have already been declared. To the example above will actually become:</p>
+<pre><code class="lang-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">test</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;working&apos;</span>);
+}
+
+test(); <span class="hljs-comment">// working</span>
+</code></pre>
+<p>Variables are also hoisted but in a different way. Only the declaration of the variable is &quot;pulled&quot; to the top. The value assignment will stay where it is. In other words, we <strong>can&apos;t</strong> access the value of a variable the same way we can call functions.</p>
 <pre><code class="lang-javascript"><span class="hljs-built_in">console</span>.log(test) <span class="hljs-comment">// undefined</span>
-<span class="hljs-keyword">var</span> test = <span class="hljs-string">&apos;working?&apos;</span>
+<span class="hljs-keyword">var</span> test = <span class="hljs-string">&apos;working&apos;</span>
 <span class="hljs-built_in">console</span>.log(test) <span class="hljs-comment">// working?</span>
 </code></pre>
-<p>This is how the above code is looking after the variables were hoisted to the top:</p>
+<p>This is how the above code will look after the variables were hoisted to the top:</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> test;
 <span class="hljs-built_in">console</span>.log(test) <span class="hljs-comment">// undefined</span>
-test = <span class="hljs-string">&apos;working?&apos;</span>
+test = <span class="hljs-string">&apos;working&apos;</span>
 <span class="hljs-built_in">console</span>.log(test) <span class="hljs-comment">// working?</span>
 </code></pre>
-<p>So be careful when you&#x2019;re using function expressions, because only their declaration will hoist to the top. We&#x2019;ve now got a basic understanding of how scoping and hoisting works in JavaScript, but in fact it&#x2019;s quite different. The whole process of executing JS code is quite different and hoisting is not happening like most people believe. It is more of a mind concept that we carry.</p>
+<p>This is why we need to be careful when we are using <strong>function expressions</strong>.</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">console</span>.log(test) <span class="hljs-comment">// undefined</span>
+<span class="hljs-built_in">console</span>.log(test()) <span class="hljs-comment">// TypeError: test is not a function</span>
+<span class="hljs-keyword">var</span> test = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;test&apos;</span>)
+}
+</code></pre>
+<p>Again, only the declaration is pulled to the top while the actual assignment of the function as a value will stay where it is. So when we try to call <code>test</code> as a function we will get an error.</p>
+<h2 id="block-scope">Block Scope</h2>
+<p>In ES6 we got two new variable declaration keywords - <code>let</code> and <code>const</code>. The main difference between them and <code>let</code> is that variables declared with the ES6 keywords are block scoped. This means that they are available only in the code block they were defined in. A code block is separated by curly braces.</p>
+<p>Since we are discussing scope, it&apos;s important to note that variables created with <code>let</code> or <code>const</code> are not hoisted. This means that they definition is not pulled to the top like variables declared with <code>var</code>.</p>
+<pre><code class="lang-javascript"><span class="hljs-built_in">console</span>.log(test) <span class="hljs-comment">// ReferenceError: test is not defined</span>
+<span class="hljs-keyword">const</span> test = <span class="hljs-string">&apos;working&apos;</span>
+</code></pre>
+<p>One way to make sure that your code is free from reference errors is to make sure that you are using only <code>let</code> and <code>const</code> for variable declaration.</p>
 <h2 id="compilation">Compilation</h2>
-<p>Contrary to most beliefs, JavaScript does compile. The V8 Engine increases performance by compiling JavaScript to native machine code before executing it, instead of executing byte code or interpreting it. What is actually happening is that the engine is making multiple runs through the code. During one of them, it declares all functions and variables, so on run-time they already exist. With hoisting we just create this mental image of how code is reorganized before execution, even though explaining the compilation process is a lot easier.</p>
-<p>Simply put&#x200A;&#x2014;&#x200A;before JS code is actually executed, the engine has already ran through the whole script and declared all variables and function declarations in their particular scopes. So on runtime, they already exist, there isn&#x2019;t any black magic that pulls them to the top of the scope. If you understand this, you will have more knowledge than 90% of other JavaScript developers.</p>
+<p>Now that we understand the concept of hoisting we will look into the internals of the language and understand how it actually works. The V8 engine increases performance by compiling JavaScript to mchine code before executing it. What happens in the process of compilation is that the engine makes multiple runs through our code. In one of the early runs it will declare all functions and variables. So when the code is executed they will already be defined.</p>
+<p>So, hoisting is actually a mental image to help us illustrate why we can access functions and variables before they are defined. The common explanation of hoisting is just a picture of how code is reorganized before execution. When the engine is actually executing our code our function and variable declarations are no longer there at all. They have already been declared in a previous run.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>JavaScript scoping is quite the topic and there is much more to be learned. I haven&#x2019;t even mentioned LHS and RHS lookups in order to keep this short and give you only the basics. JavaScript can and will have unexpected behavior if you don&#x2019;t know what you&#x2019;re doing. All in all, don&#x2019;t redeclare variables, use good descriptive names and try not to call or execute anything before it was actually declared to save yourself some headache.</p>
+<p>The concept of scope comes intuitively to developers, but in order to achieve mastery in a language we must be aware of its specifics. The things that we need to keep in mind as JavaScript developers are:</p>
+<ul>
+<li><strong>Undeclared Variables</strong></li>
+<li><strong>Block Scoped Variables</strong></li>
+<li><strong>Hoisting</strong></li>
+</ul>
 
                                 
                                 </section>
@@ -384,7 +412,7 @@ test = <span class="hljs-string">&apos;working?&apos;</span>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Scope","level":"1.2","depth":1,"next":{"title":"Closures","level":"1.3","depth":1,"path":"closures/README.md","ref":"closures/README.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"scope/README.md","mtime":"2018-07-02T11:26:49.886Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-02T11:45:46.434Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Scope","level":"1.2","depth":1,"next":{"title":"Closures","level":"1.3","depth":1,"path":"closures/README.md","ref":"closures/README.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"scope/README.md","mtime":"2018-07-08T14:06:54.248Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-07-08T12:48:54.480Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
