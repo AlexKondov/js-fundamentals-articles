@@ -1,28 +1,67 @@
 # The "new" Keyword
-In my previous article https://hackernoon.com/understanding-javascript-the-this-keyword-4de325d77f68 I vaguely mentioned the new keyword and that it creates a binding for this. In object-oriented languages new is used whenever you want to instantiate a class.
+
+One specific part of the JavaScript language that brings a lot of misunderstanding with it is the _new_ keyword. If JS is not your first programming language and you have done some OOP, you are undoubtedly used to seeing the _new_ keyword used whenever a class is instantiated.
 
 ```javascript
-var dog = new Dog();
+class Dog {
+  constructor() {
+    ...
+  }
+}
+
+const myDog = new Dog();
 ```
 
-What usually happens is that the constructor function of the class is called and it instantiates the new object. Even though JavaScript’s syntax is pretty much the same, using new causes a different behavior under the hood.
+Thanks to all the features that came to JavaScript with ES6 the code snippet above works exactly as you would expect. The typical behavior in languages that have classes is pretty straight forward. The arguments are passed to the constructor function of the class and it gives you a new object.
+
+While the JavaScript syntax is visually the same it is only syntactic sugar to what happens under the hood.
 
 ## There are no constructors
-First off, we don’t necessarily need a class in order to create an object. In JavaScript we can use a function for that purpose. Constructor functions are just regular functions that happened to be called with the new keyword in front of them. You could argue that there are no constructor functions — only constructor calls, because practically any function can be called to create an object. It doesn’t have to be part of an object or class or defined in any special way.
 
-There are a few steps that the constructor call goes through, but we’ll focus only on those that matter for the current discussion:
-
-A new object is created
-this is bound to the new object
-Unless the function returns its own object, the call will return the constructed object
+The first thing we need to get out of the way is that we don't need to have a class in order to use _new_. In JavaScript we can use a function instead of a class to achieve the same result. In fact, we can technically call any function with _new_ before it.
 
 ```javascript
-function Person(name) {
-    this.name = name
+function Dog(name) {
+  this.name = name;
 }
-var person = new Person("Alex")
-console.log(person.name) // Alex
+
+const myDog = new Dog("Lassie"); // { name: 'Lassie' }
+console.log(myDog.name); // Lassie
 ```
 
-## Summary
-To wrap things up, this is not a difficult concept. The main thing to wrap your head around is that any function can be called as a constructor and it creates a binding for this upon doing so.
+Functions that are called with the _new_ keyword are usually called constructor functions. However, we could argue that there are no constructor functions, only constructor calls since any function can be used as a constructor.
+
+```javascript
+function getName() {
+  return "Alex";
+}
+
+const test = new getName(); // { }
+```
+
+There are a few things that happen whenever we call a function with _new_:
+
+- A new object is created
+- _this_ is bound to the new object
+- The new object is returned, _unless_ the function returns its own object
+
+* The newly created object is assigned as value to the variable
+
+In other words, we tell JavaScript to execute a function and assign a new object as value to the variable depending on how the function is constructed.
+
+```javascript
+function Dog(breed) {
+  this.name = "Lassie";
+
+  return { breed };
+}
+
+const myDog = new Dog("Yorkie"); // { breed: 'Yorkie' }
+myDog.name; // undefined
+```
+
+Even though a name is added to _this_, since the function returns an object it will be used rather than the regular binding.
+
+## ES6 to the rescue
+
+Thankfully with the modern syntax of the language you can rely on classes and their constructors but it's still interesting to know the fine details.
