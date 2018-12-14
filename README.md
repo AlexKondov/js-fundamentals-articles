@@ -1,4 +1,6 @@
-# Motivation
+# About the articles
+
+## Motivation
 
 JavaScript is one of the most popular programming languages today. It runs in the browser, it runs on the server, it’s on mobile devices, desktop apps and probably refrigerators as well. Even if we take the more exotic examples out of the picture, if you are dealing with any sort of web development you will be writing or dealing with JavaScript at a certain point.
 
@@ -10,7 +12,7 @@ So when an interviewer asked my to explain what a Closure is I found myself stun
 
 A failed JavaScript interview at the start of my programming journey was the most humbling and educational experience in my development career. Since then I devoted more than a year and a half for reaching a higher dan in JS and decided that it’s high time I shared the knowledge I have gained with the other devs in my situation. Starting from one of the most common JavaScript interview questions:
 
-# About This Book
+## About This Book
 
 To be fair this is not really a book, nor do I have the motivation to make it as such but I find it shorter than calling it a "collection of articles".
 
@@ -22,7 +24,7 @@ My goal is to be able to present specifics of the JavaScript language in an easy
 
 There are courses and lectures that can present those topics in amazing detail and get to the nits and bolts of each one. There are hours and hours if in depth explanations and exercises. The articles in this book are meant to be used more as a reference and pre-interview refreshers as you can see from their length - each one can be read in about ten minutes.
 
-# Who are those articles for?
+## Who are those articles for?
 
 This book is meant for people who know how to code and are familiar with the JavaScript syntax but are still in the beginning of their career. The contents here will be perfect for you if you've just finished a course for beginners and are now looking for directions about what to do next. It's good to get a good grasp of the fundamentals concepts of the language before you start learning a framework. Understanding the JavaScript specifics will uncover some of the magic of the language and you will feel more comfortable using it because you know what happens underneath.
 
@@ -32,7 +34,7 @@ There are people have no desire to deeply understand how JavaScript works and ju
 
 In short - beginners and junior developers who want to get a better understanding of the language.
 
-# Who are those articles NOT for?
+## Who are those articles NOT for?
 
 If you have just started coding, I'd suggest to leave those topics for a bit later. Get more comfortable with the language, write a couple of simple projects to get accustomed to the syntax. When you have some experience behind your back and have gained a bit of confidence then it's time to dive a bit deeper into the confusing parts.
 
@@ -40,4 +42,16 @@ If you are already an experienced developer, then this read won't give you much 
 
 In short - anyone who doesn't fall into the previous category.
 
-# Why should you read this instead of something else on the same topic?
+## Why should you read this instead of something else on the same topic?
+
+To be fair - you won't find any breakthroughs here that you can't find anywhere else. In preparation for job interviews and lectures, I've read through an industrial quantity of articles and a few books and pulled out the essential information that I believe will give you a better understanding of the language. Most topics can be read for less than 10 minutes, serving as both a quick introduction to the topic and a refresher. Many of those articles were posted on Medium and got a lot of views and general good feedback from the community, so I decided to put them all under the same roof. 
+
+I believe that the 80/20 principle applies in full strength when learning those concepts, so grasping the core of each topic will give you most of the information you will ever need. While exotic corner cases are extremely interesting and satisfying to learn and ponder with the state of modern libraries and frameworks will leave your knowledge of them without a practical application. In the articles in this repo I've aimed to cover the 20% of each topic that will give you 80% of the knowledge to feel comfortable during an interview or discussion.
+
+## JavaScript trends are incredibly dynamic, are those articles up to date?
+
+While the ecosystem changes rapidly, technologies evolve and trends fall out of grace - the fundamentals of the language will always be the same. Understanding closures, references and scope specifics will all help you become a better JavaScript developer no matter the year. With that said there are new additions to the language that need to be discussed so I have continuously updated all of the articles multiple times. Both to improve the content and make the writing style easier to understand and follow. If you see a possible improvement feel free to contribute - all help is much appreciated!
+
+## What are you going to write about next?
+
+I try to keep the content as lean as possible so I try not to blog about everything related to JavaScript. However, I find the Node.js fundamentals to be another good area that needs more coverage so in 2019 I plan on focusing on that as well.
