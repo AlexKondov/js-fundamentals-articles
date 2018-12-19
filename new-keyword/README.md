@@ -39,15 +39,18 @@ function getName() {
 const test = new getName(); // { }
 ```
 
+Here the `test` variable will be assigned an empty object as a value since no bindings were made inside the `getName` function. It doesn't matter what the function's return value is - if we make a constructor call we will always receive an object.
+
+## Constructor calls
+
 There are a few things that happen whenever we call a function with _new_:
 
 - A new object is created
 - _this_ is bound to the new object
 - The new object is returned, _unless_ the function returns its own object
+- The newly created object is assigned as value to the variable
 
-* The newly created object is assigned as value to the variable
-
-In other words, we tell JavaScript to execute a function and assign a new object as value to the variable depending on how the function is constructed.
+In other words, we tell JavaScript to execute a function and return an object. Any _this_ bindings in the function are made on the object being returned.
 
 ```javascript
 function Dog(breed) {
@@ -62,6 +65,6 @@ myDog.name; // undefined
 
 Even though a name is added to _this_, since the function returns an object it will be used rather than the regular binding.
 
-## ES6 to the rescue
+## ES6
 
-Thankfully with the modern syntax of the language you can rely on classes and their constructors but it's still interesting to know the fine details.
+From ES6 forward we can use the class syntax and the constructor like in typical object oriented languages. I find this to be a great addition since it makes the language more accessible to people comming from an OO language. Still, it's important to note that classes are just syntactic sugar on top of JavaScript's existing functionality.
